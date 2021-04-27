@@ -1,12 +1,16 @@
 import NivoLine from "./NivoLine";
-import { aprilItems } from "./items";
+import { aprilItems, marchItems } from "./items";
+import { useState } from "react";
+
+import { Flex, Text } from "rebass";
 
 const App = () => {
-  console.log("aprilItems", aprilItems);
+  const [item, setItem] = useState(aprilItems);
+
   const series = [
     {
       id: `charges`,
-      data: aprilItems,
+      data: item.data,
     },
   ];
 
@@ -22,12 +26,22 @@ const App = () => {
 
   return (
     <div className={"flex"}>
-      <NivoLine
-        data={series}
-        axisBottom={axisBottom}
-        yFormat={yFormat}
-        xFormat={xFormat}
-      />
+      <Flex p="10px">
+        <button onClick={() => setItem(marchItems)}>show march data</button>
+        <button onClick={() => setItem(aprilItems)}>show april data</button>
+      </Flex>
+
+      <Flex p="10px" flexDirection={"column"}>
+        <Text>is showing {item.label}</Text>
+        <Flex height={"300px"}>
+          <NivoLine
+            data={series}
+            axisBottom={axisBottom}
+            yFormat={yFormat}
+            xFormat={xFormat}
+          />
+        </Flex>
+      </Flex>
     </div>
   );
 };
